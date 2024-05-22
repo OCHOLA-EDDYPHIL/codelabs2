@@ -21,3 +21,8 @@ def special_character_names(df):
 
 def read_excel_file() -> list:
     pass
+
+def shuffle_and_save(df):
+    shuffled_df = df.sample(frac=1).reset_index(drop=True)
+    shuffled_df.to_json('shuffled_students.json', orient='records', lines=False)
+    shuffled_df.to_json('shuffled_students.jsonl', orient='records', lines=True)
