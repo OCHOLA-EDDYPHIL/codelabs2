@@ -19,7 +19,9 @@ def special_character_names(df):
     with open('logs.txt', 'a') as log_file:
         log_file.write(f"Special character names:\n{special_char_names.to_string(index=False)}\n")
 
+
 def read_excel_file() -> list:
+    df = pd.read_excel('Test files.xlsx')
     pass
 
 def shuffle_and_save(df):
