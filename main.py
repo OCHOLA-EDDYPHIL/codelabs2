@@ -4,7 +4,7 @@ This python module is used to run all the functions in the project
 import os
 
 import pandas as pd
-from tasks import generate_email, special_character_names, read_excel_file
+from tasks import generate_email, special_character_names, read_excel_file, separate_by_gender
 from time import time
 
 INPUT_FILE_PATH = 'input_data_files/Test files.xlsx'
@@ -30,13 +30,24 @@ def main():
     print("DataFrame created.")
 
     # Generate email addresses
-    df['Email'] = df['Student Name'].apply(generate_email)
+    df['Email Address'] = df['Student Name'].apply(generate_email)
     print("Emails generated.")
+
+    # Separate by gender
+    males, females = separate_by_gender(df)
 
     # Save the DataFrame with emails to the output directory
     output_csv_path = os.path.join(OUTPUT_FILE_PATH, 'output_with_emails.csv')
     df.to_csv(output_csv_path, index=False)
     print(f"Output saved to {output_csv_path}")
+
+    males_csv_path = os.path.join(OUTPUT_FILE_PATH, 'males_with_emails.csv')
+    males.to_csv(males_csv_path, index=False)
+    print(f"Males saved to {males_csv_path}")
+
+    females_csv_path = os.path.join(OUTPUT_FILE_PATH, 'females_with_emails.csv')
+    females.to_csv(females_csv_path, index=False)
+    print(f"Females saved to {females_csv_path}")
 
     # Process special character names and log them
     special_character_names(df, OUTPUT_FILE_PATH)
