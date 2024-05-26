@@ -25,9 +25,8 @@ def generate_email(full_name):
 def special_character_names(df, output_path):
     special_char_names = df[df['Student Name'].str.contains("'", na=False)]
     special_char_names.to_csv(os.path.join(output_path, 'special_char_names.csv'), index=False)
-
-    with open(os.path.join(output_path, 'logs.txt'), 'a') as log_file:
-        log_file.write(f"Special character names:\n{special_char_names.to_string(index=False)}\n")
+    log_message(output_path, "Special characters generated and saved to CSV file.")
+    log_message(output_path, f"Special character names:\n{special_char_names.to_string(index=False)}")
 
 
 def read_excel_file(file_path) -> list:
@@ -35,7 +34,20 @@ def read_excel_file(file_path) -> list:
     return df.to_dict(orient='records')
 
 
-def separate_by_gender(df):
+def separate_by_gender(df, output_path):
     males = df[df['Gender'] == 'M']
     females = df[df['Gender'] == 'F']
-    return males, females
+
+    males_csv_path = os.path.join(output_path, 'males_with_emails.csv')
+    males.to_csv(males_csv_path, index=False)
+    log_message(output_path, f"Males: \n{males.to_string(index=False)}")
+
+    females_csv_path = os.path.join(output_path, 'females_with_emails.csv')
+    females.to_csv(females_csv_path, index=False)
+    log_message(output_path, f"Females: \n{females.to_string(index=False)}")
+
+
+def log_message(output_path, message):
+    log_file_path = os.path.join(output_path, 'logs.txt')
+    with open(log_file_path, 'a') as log_file:
+        log_file.write(message + "\n")
