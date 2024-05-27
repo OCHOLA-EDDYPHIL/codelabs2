@@ -1,23 +1,24 @@
 """
 This python module is used to run all the functions in the project
 """
-import os
-
 import pandas as pd
-from tasks import generate_email, special_character_names, read_excel_file, separate_by_gender, log_message
+from tasks import generate_email, special_character_names, read_excel_file, separate_by_gender, log_message, \
+    shuffle_and_save
 from time import time
+from pathlib import Path
 
-INPUT_FILE_PATH = 'input_data_files/Test files.xlsx'
-OUTPUT_FILE_PATH = 'output_data_files/'
+INPUT_FILE_PATH = Path('input_data_files/Test files.xlsx')
+OUTPUT_FILE_PATH = Path('output_data_files/')
 
 
 def main():
-    if not os.path.exists(INPUT_FILE_PATH):
+    # Checks if input file exists
+    if not INPUT_FILE_PATH.exists():
         print(f"Input file not found: {INPUT_FILE_PATH}")
         return
-
-    if not os.path.exists(OUTPUT_FILE_PATH):
-        os.makedirs(OUTPUT_FILE_PATH)
+    # Create output directory if it doesn't exist
+    if not OUTPUT_FILE_PATH.exists():
+        OUTPUT_FILE_PATH.mkdir(parents=True)
         print(f"Created output directory: {OUTPUT_FILE_PATH}")
 
     # Read the Excel file
@@ -33,7 +34,7 @@ def main():
     df['Email Address'] = df['Student Name'].apply(generate_email)
 
     # Save the DataFrame with emails to the output directory
-    df.to_csv(os.path.join(OUTPUT_FILE_PATH, 'output_with_emails.csv'), index=False)
+    df.to_csv(f"{OUTPUT_FILE_PATH}/output_with_emails.csv", index=False)
     log_message(OUTPUT_FILE_PATH,"Emails generated and saved to CSV file.")
     log_message(OUTPUT_FILE_PATH, f"Generated emails: \n{df[['Student Name', 'Email Address']].to_string(index=False)}")
 
@@ -43,8 +44,13 @@ def main():
     # Process special character names and log them
     special_character_names(df, OUTPUT_FILE_PATH)
 
+    # Shuffle and save the data
+    shuffle_and_save(df, OUTPUT_FILE_PATH)
+
 
 if __name__ == '__main__':
     start_time = time()
     main()
-    print(f"Execution time: {time() - start_time} seconds")
+    execution_time = time() - start_time
+    log_message(OUTPUT_FILE_PATH, f"Execution time: {execution_time}")
+    print(f"Execution time: {execution_time} seconds")
