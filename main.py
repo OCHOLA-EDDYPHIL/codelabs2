@@ -16,6 +16,7 @@ def main():
     if not INPUT_FILE_PATH.exists():
         print(f"Input file not found: {INPUT_FILE_PATH}")
         return
+
     # Create output directory if it doesn't exist
     if not OUTPUT_FILE_PATH.exists():
         OUTPUT_FILE_PATH.mkdir(parents=True)
