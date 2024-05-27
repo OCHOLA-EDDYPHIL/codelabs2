@@ -7,9 +7,6 @@ import pandas as pd
 import json
 
 
-# import os
-
-
 def generate_email(full_name):
     # Split the full name into individual names
     names = full_name.split()

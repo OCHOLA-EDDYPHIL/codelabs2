@@ -2,6 +2,8 @@
 This python module is used to run all the functions in the project
 """
 import pandas as pd
+
+from similarity import split_names, compute_similarity
 from tasks import generate_email, special_character_names, read_excel_file, separate_by_gender, log_message, \
     shuffle_and_save
 from time import time
@@ -29,14 +31,14 @@ def main():
         return
 
     df = pd.DataFrame(data_list)
-    log_message(OUTPUT_FILE_PATH,"DataFrame created from Excel file.")
+    log_message(OUTPUT_FILE_PATH, "DataFrame created from Excel file.")
 
     # Generate email addresses
     df['Email Address'] = df['Student Name'].apply(generate_email)
 
     # Save the DataFrame with emails to the output directory
     df.to_csv(f"{OUTPUT_FILE_PATH}/output_with_emails.csv", index=False)
-    log_message(OUTPUT_FILE_PATH,"Emails generated and saved to CSV file.")
+    log_message(OUTPUT_FILE_PATH, "Emails generated and saved to CSV file.")
     log_message(OUTPUT_FILE_PATH, f"Generated emails: \n{df[['Student Name', 'Email Address']].to_string(index=False)}")
 
     # Separate by gender
@@ -47,6 +49,12 @@ def main():
 
     # Shuffle and save the data
     shuffle_and_save(df, OUTPUT_FILE_PATH)
+
+    # Calculate similarity
+    male_names, female_names = split_names(df)
+    compute_similarity(male_names, female_names, OUTPUT_FILE_PATH)
+
+    # save_results(results, OUTPUT_FILE_PATH)
 
 
 if __name__ == '__main__':
