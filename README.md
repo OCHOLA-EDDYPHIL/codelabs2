@@ -16,7 +16,7 @@ This project includes a collection of Python scripts designed to manipulate and 
 
 ### Installing
 
-1. Clone the repository to your local machine: git clone https://github.com/OCHOLA-EDDYPHIL/codelabs2.git
+1. Clone the repository to your local machine: git clone -b ochola https://github.com/OCHOLA-EDDYPHIL/codelabs2.git
 2. Install the required packages: pip install pandas openpyxl
 
 ### Executing Program
