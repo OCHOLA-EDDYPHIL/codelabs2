@@ -1,0 +1,9 @@
+[submodule "Data Structures/Linked Lists"]
+	path = Data Structures/Linked Lists
+	url = https://github.com/OCHOLA-EDDYPHIL/Linked-Lists.git
+[submodule "Algorithms/SortingAlgorithms"]
+	path = Algorithms/SortingAlgorithms
+	url = https://github.com/OCHOLA-EDDYPHIL/Sorting-algorithms.git
+[submodule "Codelabs/solutions"]
+	path = Codelabs/solutions
+	url = https://github.com/OCHOLA-EDDYPHIL/solutions.git
